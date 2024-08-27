@@ -15,7 +15,7 @@ export default function ViewProduct() {
   useEffect(() => {
     console.warn('productid', id);
     viewProductDetails();
-  }, [id, viewProductDetails]);
+  }, [id]);
 
   return (
     <div>
