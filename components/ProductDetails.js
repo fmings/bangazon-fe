@@ -1,8 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
+import { createOrderItem } from '../api/orderItemData';
 
 export default function ProductDetails({ productObj }) {
+  // const getOrder = () => {
+
+  // }
+
+  const addToCart = () => {
+    console.warn('button clicked');
+    const payload = { itemId: productObj.id };
+    createOrderItem(payload);
+  };
+
   return (
     <div>
       <img className="detail-image" alt={productObj.title} src={productObj.imageUrl} />
@@ -10,7 +21,7 @@ export default function ProductDetails({ productObj }) {
       <h3>${productObj.price}</h3>
       <h6>QTY Remaining: {productObj.inventoryQty}</h6>
       <h4>{productObj.description}</h4>
-      <Button>Add to Cart</Button>
+      <Button onClick={addToCart}>Add to Cart</Button>
     </div>
   );
 }
