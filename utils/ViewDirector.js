@@ -6,8 +6,6 @@ import NavBar from '../components/NavBar';
 import RegisterForm from '../components/RegisterForm';
 import NoAuthNavBar from '../components/NoAuthNavBar';
 import Home from '../pages';
-import ProductCard from '../components/ProductCard';
-import ProductDetails from '../components/ProductDetails';
 
 const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) => {
   const { user, userLoading, updateUser } = useAuth();

@@ -1,17 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { createOrderItem } from '../api/orderItemData';
+import { useAuth } from '../utils/context/authContext';
+import { createOrder, latestOpenOrder } from '../api/orderData';
 
 export default function ProductDetails({ productObj }) {
-  // const getOrder = () => {
+  const { user } = useAuth();
+  const [openOrder, setOpenOrder] = useState(null);
 
-  // }
+  const getOpenOrder = () => {
+    latestOpenOrder(user.id).then((order) => {
+      if (order) {
+        setOpenOrder(order);
+      } else {
+        setOpenOrder(null);
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (user) {
+      getOpenOrder();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const addToCart = () => {
     console.warn('button clicked');
-    const payload = { itemId: productObj.id };
-    createOrderItem(payload);
+    if (openOrder === null) {
+      const orderPayload = {
+        customerId: user.id,
+        Open: true,
+      };
+      createOrder(orderPayload).then((newOrder) => {
+        const orderItemPayload = {
+          itemId: productObj.id,
+          orderId: newOrder.id,
+        };
+        createOrderItem(orderItemPayload);
+      });
+    } else {
+      const payload = { itemId: productObj.id, orderId: openOrder };
+      createOrderItem(payload);
+      console.warn('payload', payload);
+      console.warn('openOrder', openOrder);
+    }
   };
 
   return (
