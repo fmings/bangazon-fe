@@ -3,11 +3,12 @@ import React from 'react';
 import Link from 'next/link';
 import {
   Navbar, Container, Nav,
-  Button,
-} from 'react-bootstrap';
-import PropTypes from 'prop-types';
 
-export default function NoAuthNavBar({ signIn }) {
+} from 'react-bootstrap';
+// import { signIn } from '../utils/auth';
+import Signin from './Signin';
+
+export default function NoAuthNavBar() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -23,16 +24,13 @@ export default function NoAuthNavBar({ signIn }) {
             <Link passHref href="/">
               <Nav.Link>Home</Nav.Link>
             </Link>
-            <Button type="button" size="lg" className="copy-btn" onClick={signIn}>
+            {/* <Button type="button" size="lg" className="copy-btn" onClick={signIn}>
               Sign In
-            </Button>
+            </Button> */}
+            <Signin />
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 }
-
-NoAuthNavBar.propTypes = {
-  signIn: PropTypes.func.isRequired,
-};

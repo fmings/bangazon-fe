@@ -3,11 +3,8 @@ import 'firebase/auth';
 import { clientCredentials } from './client';
 
 const checkUser = (uid) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/checkuser`, {
-    method: 'POST',
-    body: JSON.stringify({
-      uid,
-    }),
+  fetch(`${clientCredentials.databaseURL}/checkuser/${uid}`, {
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
@@ -32,7 +29,25 @@ const registerUser = (userInfo) => new Promise((resolve, reject) => {
 
 const signIn = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider);
+  firebase.auth().signInWithPopup(provider).then((result) => {
+    const { user } = result;
+    const userInfo = {
+      uid: user.uid,
+      displayName: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL,
+    };
+
+    checkUser(user.uid).then((backendUser) => {
+      if (!backendUser) {
+        registerUser(userInfo).then(() => {
+          console.warn('User registered in backend');
+        }).catch((err) => console.error('Error registering user:', err));
+      } else {
+        console.warn('user already exists in backend');
+      }
+    }).catch((err) => console.error('error checking user:', err));
+  }).catch((err) => console.error('error signing in:', err));
 };
 
 const signOut = () => {
