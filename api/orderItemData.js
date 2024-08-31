@@ -29,7 +29,7 @@ const getOrderItems = (orderId) => new Promise((resolve, reject) => {
 
 const deleteOrderItem = (orderItemId) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/api/orderitem/${orderItemId}`, {
-    method: 'GET',
+    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },

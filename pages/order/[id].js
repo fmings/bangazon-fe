@@ -25,10 +25,15 @@ export default function ViewOrder() {
     getOrderTotal();
   }, []);
 
+  const handleUpdate = () => {
+    getAllOrderItems();
+    getOrderTotal();
+  };
+
   return (
     <>
       <div>
-        {orderItems.map((orderItem) => <OrderItemCard key={orderItem.id} productObj={orderItem.productItem} />)}
+        {orderItems.map((orderItem) => <OrderItemCard key={orderItem.id} productObj={orderItem.productItem} orderObj={orderItem} onUpdate={handleUpdate} />)}
       </div>
       <div>
         <h3>Order Total: ${orderTotalAmount}</h3>
