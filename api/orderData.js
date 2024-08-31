@@ -57,9 +57,22 @@ const latestOpenOrder = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const orderTotal = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/api/order/${id}/total`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
 export {
   getSingleOrder,
   createOrder,
   updateOrder,
   latestOpenOrder,
+  orderTotal,
 };
