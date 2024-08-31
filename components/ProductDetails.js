@@ -35,13 +35,13 @@ export default function ProductDetails({ productObj }) {
       };
       createOrder(orderPayload).then((newOrder) => {
         const orderItemPayload = {
-          itemId: productObj.id,
+          productItemId: productObj.id,
           orderId: newOrder.id,
         };
         createOrderItem(orderItemPayload);
       });
     } else {
-      const payload = { itemId: productObj.id, orderId: openOrder };
+      const payload = { productItemId: productObj.id, orderId: openOrder };
       createOrderItem(payload);
       console.warn('payload', payload);
       console.warn('openOrder', openOrder);

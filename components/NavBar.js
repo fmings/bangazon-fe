@@ -7,22 +7,31 @@ import {
   Nav,
   Button,
 } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
 import { signOut } from '../utils/auth';
-// import { latestOpenOrder } from '../api/orderData';
+import { latestOpenOrder } from '../api/orderData';
 import { useAuth } from '../utils/context/authContext';
-// import { useAuth } from '../utils/context/authContext';
 
 export default function NavBar() {
-  // const [latestOrder, setLatestOrder] = useState({});
+  const [openOrder, setOpenOrder] = useState(null);
   const { user } = useAuth();
 
-  // const getLatestOpenOrder = () => {
-  //   latestOpenOrder().then(setLatestOrder);
-  // };
+  const getOpenOrder = () => {
+    latestOpenOrder(user.id).then((order) => {
+      if (order) {
+        setOpenOrder(order);
+      } else {
+        setOpenOrder(null);
+      }
+    });
+  };
 
-  // useEffect(() => {
-  //   getLatestOpenOrder();
-  // }, []);
+  useEffect(() => {
+    if (user) {
+      getOpenOrder();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -40,7 +49,7 @@ export default function NavBar() {
             <Link passHref href="/">
               <Nav.Link>Home</Nav.Link>
             </Link>
-            <Link passHref href="/">
+            <Link passHref href={`/order/${openOrder}`}>
               <Nav.Link><img alt="shopping cart" src="/cart-icon.png" width="35" /></Nav.Link>
             </Link>
             <Button variant="danger" onClick={signOut}>
