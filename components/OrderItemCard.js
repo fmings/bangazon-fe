@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default function OrderItemCard({ productObj }) {
   return (
     <div>
-      <img alt={productObj.title} className="product-order-image" src={productObj.imageUrl} />
+      <img alt={productObj.title} className="product-order-image" src={productObj.imageUrl} width="50" />
       <h3>{productObj.title}</h3>
       <h5>${productObj.price}</h5>
     </div>
