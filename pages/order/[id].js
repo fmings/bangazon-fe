@@ -1,10 +1,10 @@
 import React from 'react';
-import ProductDetails from '../../components/ProductDetails';
+import OrderItemCard from '../../components/OrderItemCard';
 
 export default function ViewOrder() {
   return (
     <div>
-      <ProductDetails />
+      <OrderItemCard />
     </div>
   );
 }
