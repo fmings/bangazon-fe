@@ -55,14 +55,16 @@ export default function ProductDetails({ productObj }) {
   const sellerLastName = productObj.user?.lastName || '';
 
   return (
-    <div>
+    <div className="product-detail-container">
       <img className="detail-image" alt={productObj.title} src={productObj.imageUrl} />
-      <h1>{productObj.title}</h1>
-      <h3>${productObj.price}</h3>
-      <h6>QTY Remaining: {productObj.inventoryQty}</h6>
-      {productObj ? (<Link passHref href={`/seller/${productObj.userId}`}><h6>Sold By: {sellerFirstName} {sellerLastName}</h6></Link>) : (<h6>Sold By: Information Not Available</h6>)}
-      <h4>{productObj.description}</h4>
-      <Button onClick={addToCart}>Add to Cart</Button>
+      <div className="product-detail-content">
+        <h1>{productObj.title}</h1>
+        <h3>${productObj.price}</h3>
+        <h6>QTY Remaining: {productObj.inventoryQty}</h6>
+        {productObj ? (<Link passHref href={`/seller/${productObj.userId}`}><h6>Sold By: {sellerFirstName} {sellerLastName}</h6></Link>) : (<h6>Sold By: Information Not Available</h6>)}
+        <h5>{productObj.description}</h5>
+        <Button onClick={addToCart}>Add to Cart</Button>
+      </div>
     </div>
   );
 }

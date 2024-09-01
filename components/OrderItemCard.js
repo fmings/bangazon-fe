@@ -13,11 +13,11 @@ export default function OrderItemCard({ productObj, orderObj, onUpdate }) {
   };
 
   return (
-    <div>
-      <img alt={productObj.title} className="product-order-image" src={productObj.imageUrl} width="50" />
-      <h3>{productObj.title}</h3>
+    <div className="order-item-card">
+      <img alt={productObj.title} className="product-order-image" src={productObj.imageUrl} width="75" />
+      <h4>{productObj.title}</h4>
       <h5>${productObj.price}</h5>
-      <Button onClick={deleteItem}><img alt="trash can" src="/recycle-bin.png" width="35" /></Button>
+      <Button className="delete-from-cart" onClick={deleteItem}><img alt="trash can" src="/recycle-bin.png" width="35" /></Button>
     </div>
   );
 }

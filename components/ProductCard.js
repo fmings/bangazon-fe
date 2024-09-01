@@ -5,18 +5,22 @@ import Link from 'next/link';
 
 export default function ProductCard({ productObj }) {
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={productObj.imageUrl} />
-      <Card.Body>
-        <Card.Title><Link passHref href={`product/${productObj.id}`}>{productObj.title}</Link></Card.Title>
-        <Card.Text>
-          ${productObj.price}
-        </Card.Text>
-        <Card.Text>
-          {productObj.description}
-        </Card.Text>
-      </Card.Body>
-    </Card>
+    <>
+      <Link passHref href={`product/${productObj.id}`}>
+        <Card style={{ width: '18rem' }}>
+          <Card.Img variant="top" src={productObj.imageUrl} />
+          <Card.Body>
+            <Card.Title>{productObj.title}</Card.Title>
+            <Card.Text>
+              ${productObj.price}
+            </Card.Text>
+            <Card.Text className="product-description">
+              {productObj.description}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </Link>
+    </>
   );
 }
 
