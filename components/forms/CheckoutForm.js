@@ -44,20 +44,26 @@ export default function CheckoutForm() {
     });
   };
 
-  const getOpenOrderDetails = () => {
-    getSingleOrder(openOrderId).then(setOpenOrderDetails);
+  const getOpenOrderDetails = (orderId) => {
+    if (orderId) {
+      getSingleOrder(orderId)
+        .then(setOpenOrderDetails);
+    }
   };
 
   useEffect(() => {
+    console.warn('user', user);
     if (user) {
       getOpenOrder();
-      console.warn('open order', openOrderId);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
-    getOpenOrderDetails();
+    console.warn(openOrderId);
+    if (openOrderId) {
+      getOpenOrderDetails(openOrderId);
+    }
   }, [openOrderId]);
 
   const handleOrderFormChange = (e) => {
@@ -95,11 +101,14 @@ export default function CheckoutForm() {
           ...orderFormInput, paymentId, open: false, customerId: openOrderDetails.customerId, id: openOrderDetails.id, orderDate: new Date().toISOString(), totalAmount: openOrderDetails.totalAmount,
         };
         console.warn('orderPayload', orderPayload);
-        updateOrder(openOrderId, orderPayload);
+        updateOrder(openOrderId, orderPayload).then(() => {
+          setOpenOrderId(null);
+          setOpenOrderDetails({});
+          router.push('/thankYou');
+        });
       });
     };
     createPaymentUpdateOrder();
-    router.push('/thankYou');
   };
 
   return (
