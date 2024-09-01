@@ -10,9 +10,11 @@ export default function ThankYou() {
   };
 
   return (
-    <div>
-      Thank you for your order!
-      <Button onClick={keepShopping}>Keep Shopping</Button>
+    <div className="thank-you-container">
+      <h1>Thank you for your order!</h1>
+      <div>
+        <Button onClick={keepShopping}>Keep Shopping</Button>
+      </div>
     </div>
   );
 }

@@ -60,7 +60,7 @@ export default function ViewOrder() {
         {orderItems.map((orderItem) => <OrderItemCard key={orderItem.id} productObj={orderItem.productItem} orderObj={orderItem} onUpdate={handleUpdate} />)}
       </div>
       <div>
-        <h3>Order Total: ${orderTotalAmount}</h3>
+        <h4 className="order-total">Order Total: ${orderTotalAmount}</h4>
         <Button onClick={handleCheckout}>Checkout</Button>
       </div>
     </>
