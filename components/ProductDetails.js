@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
+import Link from 'next/link';
 import { createOrderItem } from '../api/orderItemData';
 import { useAuth } from '../utils/context/authContext';
 import { createOrder, latestOpenOrder } from '../api/orderData';
+import Loading from './Loading';
 
 export default function ProductDetails({ productObj }) {
   const { user } = useAuth();
@@ -48,12 +50,20 @@ export default function ProductDetails({ productObj }) {
     }
   };
 
+  if (!productObj) {
+    return <Loading />;
+  }
+
+  const sellerFirstName = productObj.user?.firstName || 'information note available';
+  const sellerLastName = productObj.user?.lastName || '';
+
   return (
     <div>
       <img className="detail-image" alt={productObj.title} src={productObj.imageUrl} />
       <h1>{productObj.title}</h1>
       <h3>${productObj.price}</h3>
       <h6>QTY Remaining: {productObj.inventoryQty}</h6>
+      {productObj ? (<Link passHref href={`/seller/${productObj.userId}`}><h6>Sold By: {sellerFirstName} {sellerLastName}</h6></Link>) : (<h6>Sold By: Information Not Available</h6>)}
       <h4>{productObj.description}</h4>
       <Button onClick={addToCart}>Add to Cart</Button>
     </div>
@@ -68,5 +78,10 @@ ProductDetails.propTypes = {
     price: PropTypes.number,
     imageUrl: PropTypes.string,
     inventoryQty: PropTypes.number,
+    userId: PropTypes.number,
+    user: PropTypes.shape({
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+    }),
   }).isRequired,
 };
