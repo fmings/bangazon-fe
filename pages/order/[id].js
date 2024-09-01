@@ -3,37 +3,55 @@ import { useRouter } from 'next/router';
 import { Button } from 'react-bootstrap';
 import OrderItemCard from '../../components/OrderItemCard';
 import { getOrderItems } from '../../api/orderItemData';
-import { orderTotal } from '../../api/orderData';
+import { latestOpenOrder, orderTotal } from '../../api/orderData';
+import { useAuth } from '../../utils/context/authContext';
 
 export default function ViewOrder() {
   const [orderItems, setOrderItems] = useState([]);
   const [orderTotalAmount, setOrderTotalAmount] = useState(null);
   const router = useRouter();
   const { id } = router.query;
+  const { user } = useAuth();
 
-  const getAllOrderItems = () => {
-    getOrderItems(id).then(setOrderItems);
-  };
-
-  const getOrderTotal = () => {
-    orderTotal(id).then((order) => {
-      setOrderTotalAmount(order.totalAmount);
+  const getLastOpenOrder = () => {
+    latestOpenOrder(user.id).then((openOrder) => {
+      if (openOrder) {
+        getOrderItems(openOrder).then(setOrderItems);
+        orderTotal(openOrder).then((order) => {
+          setOrderTotalAmount(order.totalAmount);
+        });
+      }
     });
   };
+  // const getAllOrderItems = () => {
+  //   getOrderItems(id).then(setOrderItems);
+  // };
+
+  // const getOrderTotal = () => {
+  //   orderTotal(id).then((order) => {
+  //     setOrderTotalAmount(order.totalAmount);
+  //   });
+  // };
 
   useEffect(() => {
-    getAllOrderItems();
-    getOrderTotal();
-  }, []);
+    // getAllOrderItems();
+    if (user && id) {
+      getLastOpenOrder();
+    }
+    // getOrderTotal();
+  }, [id, user]);
 
   const handleUpdate = () => {
-    getAllOrderItems();
-    getOrderTotal();
+    // getAllOrderItems();
+    if (user) {
+      getLastOpenOrder();
+    }
+    // getOrderTotal();
   };
 
   const handleCheckout = () => {
     router.push('/checkout');
-    console.warn('checkout button id', id);
+    handleUpdate();
   };
 
   return (

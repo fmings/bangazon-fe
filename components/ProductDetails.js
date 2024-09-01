@@ -13,11 +13,7 @@ export default function ProductDetails({ productObj }) {
 
   const getOpenOrder = () => {
     latestOpenOrder(user.id).then((order) => {
-      if (order) {
-        setOpenOrder(order);
-      } else {
-        setOpenOrder(null);
-      }
+      setOpenOrder(order || null);
     });
   };
 
@@ -29,18 +25,19 @@ export default function ProductDetails({ productObj }) {
   }, [user]);
 
   const addToCart = () => {
-    console.warn('button clicked');
     if (openOrder === null) {
       const orderPayload = {
         customerId: user.id,
-        Open: true,
+        open: true,
       };
       createOrder(orderPayload).then((newOrder) => {
         const orderItemPayload = {
           productItemId: productObj.id,
           orderId: newOrder.id,
         };
-        createOrderItem(orderItemPayload);
+        createOrderItem(orderItemPayload).then(() => {
+          setOpenOrder(newOrder.id);
+        });
       });
     } else {
       const payload = { productItemId: productObj.id, orderId: openOrder };
@@ -78,7 +75,7 @@ ProductDetails.propTypes = {
     price: PropTypes.number,
     imageUrl: PropTypes.string,
     inventoryQty: PropTypes.number,
-    userId: PropTypes.number,
+    userId: PropTypes.string,
     user: PropTypes.shape({
       firstName: PropTypes.string,
       lastName: PropTypes.string,
