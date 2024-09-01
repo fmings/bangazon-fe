@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { Button } from 'react-bootstrap';
 import OrderItemCard from '../../components/OrderItemCard';
 import { getOrderItems } from '../../api/orderItemData';
 import { orderTotal } from '../../api/orderData';
@@ -30,6 +31,11 @@ export default function ViewOrder() {
     getOrderTotal();
   };
 
+  const handleCheckout = () => {
+    router.push('/checkout');
+    console.warn('checkout button id', id);
+  };
+
   return (
     <>
       <div>
@@ -37,6 +43,7 @@ export default function ViewOrder() {
       </div>
       <div>
         <h3>Order Total: ${orderTotalAmount}</h3>
+        <Button onClick={handleCheckout}>Checkout</Button>
       </div>
     </>
   );
