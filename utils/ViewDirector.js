@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useRouter } from 'next/router';
 import { useAuth } from './context/authContext';
 import Loading from '../components/Loading';
 // import Signin from '../components/Signin';
@@ -6,9 +7,11 @@ import NavBar from '../components/NavBar';
 import RegisterForm from '../components/RegisterForm';
 import NoAuthNavBar from '../components/NoAuthNavBar';
 import Home from '../pages';
+import Register from '../pages/register';
 
 const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) => {
   const { user, userLoading, updateUser } = useAuth();
+  const router = useRouter();
 
   // if user state is null, then show loader
   if (userLoading) {
@@ -25,10 +28,19 @@ const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) 
     );
   }
 
+  if (!user && router.pathname === '/register') {
+    return (
+      <>
+        <NoAuthNavBar />
+        <Register />
+      </>
+    );
+  }
+
   return (
     <>
       <NoAuthNavBar />
-      <Home />;
+      <Home />
     </>
 
   );
