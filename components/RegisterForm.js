@@ -1,3 +1,5 @@
+import Signin from './Signin';
+
 function RegisterForm() {
   // const [formData, setFormData] = useState({
   //   bio: '',
@@ -12,6 +14,7 @@ function RegisterForm() {
   return (
     <>
       <h1>To view products and start shopping, please sign in/register</h1>
+      <Signin />
       {/* <Form onSubmit={handleSubmit}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Gamer Bio</Form.Label>
