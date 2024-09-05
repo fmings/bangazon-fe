@@ -42,8 +42,6 @@ export default function ProductDetails({ productObj }) {
     } else {
       const payload = { productItemId: productObj.id, orderId: openOrder };
       createOrderItem(payload);
-      console.warn('payload', payload);
-      console.warn('openOrder', openOrder);
     }
   };
 

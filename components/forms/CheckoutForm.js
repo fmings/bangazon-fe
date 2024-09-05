@@ -52,7 +52,6 @@ export default function CheckoutForm() {
   };
 
   useEffect(() => {
-    console.warn('user', user);
     if (user) {
       getOpenOrder();
     }
@@ -60,7 +59,6 @@ export default function CheckoutForm() {
   }, [user]);
 
   useEffect(() => {
-    console.warn(openOrderId);
     if (openOrderId) {
       getOpenOrderDetails(openOrderId);
     }
@@ -94,13 +92,11 @@ export default function CheckoutForm() {
     const createPaymentUpdateOrder = () => {
       const { id, ...paymentPayload } = paymentFormInput;
       const paymentWithOrderId = { ...paymentPayload, orderId: openOrderId };
-      console.warn('paymentpayload', paymentWithOrderId);
       createPaymentDetails(paymentWithOrderId).then((paymentResponse) => {
         const paymentId = paymentResponse.id;
         const orderPayload = {
           ...orderFormInput, paymentId, open: false, customerId: openOrderDetails.customerId, id: openOrderDetails.id, orderDate: new Date().toISOString(), totalAmount: openOrderDetails.totalAmount,
         };
-        console.warn('orderPayload', orderPayload);
         updateOrder(openOrderId, orderPayload).then(() => {
           setOpenOrderId(null);
           setOpenOrderDetails({});

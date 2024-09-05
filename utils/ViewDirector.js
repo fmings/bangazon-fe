@@ -40,7 +40,9 @@ const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) 
   return (
     <>
       <NoAuthNavBar />
-      <Home />
+      <div className="container">
+        <Home />
+      </div>
     </>
 
   );

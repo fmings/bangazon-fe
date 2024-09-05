@@ -12,7 +12,7 @@ export default function Register() {
   }
 
   return (
-    <div>
+    <div className="container register">
       <RegisterForm />
     </div>
   );
