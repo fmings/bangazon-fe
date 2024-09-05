@@ -13,7 +13,6 @@ export default function ViewProduct() {
   };
 
   useEffect(() => {
-    console.warn('productid', id);
     viewProductDetails();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);

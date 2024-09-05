@@ -23,12 +23,6 @@ function Home() {
       className="d-flex flex-wrap"
     >
       {productItems.map((productItem) => (<ProductCard productObj={productItem} key={productItem.id} />))}
-      {/* <h1>Hello {user.fbUser.displayName}! </h1> */}
-      {/* <p>Your Bio: {user.bio}</p> */}
-      {/* <p>Click the button below to logout!</p> */}
-      {/* <Button variant="danger" type="button" size="lg" className="copy-btn" onClick={signOut}> */}
-      {/* Sign Out */}
-      {/* </Button> */}
     </div>
   );
 }

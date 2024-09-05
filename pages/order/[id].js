@@ -23,30 +23,17 @@ export default function ViewOrder() {
       }
     });
   };
-  // const getAllOrderItems = () => {
-  //   getOrderItems(id).then(setOrderItems);
-  // };
-
-  // const getOrderTotal = () => {
-  //   orderTotal(id).then((order) => {
-  //     setOrderTotalAmount(order.totalAmount);
-  //   });
-  // };
 
   useEffect(() => {
-    // getAllOrderItems();
     if (user && id) {
       getLastOpenOrder();
     }
-    // getOrderTotal();
   }, [id, user]);
 
   const handleUpdate = () => {
-    // getAllOrderItems();
     if (user) {
       getLastOpenOrder();
     }
-    // getOrderTotal();
   };
 
   const handleCheckout = () => {

@@ -5,9 +5,7 @@ import { deleteOrderItem } from '../api/orderItemData';
 
 export default function OrderItemCard({ productObj, orderObj, onUpdate }) {
   const deleteItem = () => {
-    console.warn('trash clicked');
     if (window.confirm(`Are you sure you want to remove ${productObj.title} from your cart?`)) {
-      console.warn('deleteid', orderObj.id);
       deleteOrderItem(orderObj.id).then(() => onUpdate());
     }
   };
